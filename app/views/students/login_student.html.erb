@@ -1,0 +1,9 @@
+<%= notice %>
+<%= form_for :student, url: { action: "s_login" } do |f| %>
+
+	<%= f.email_field :email, placeholder: "Email"  %><br/>
+    <%= f.password_field :password, autocomplete: "off", placeholder: "Password"  %><br/>
+ <%= f.submit 'submit' %>
+<% end %>
+
+<%= link_to "Signup", controller: "students", action: "new" %>

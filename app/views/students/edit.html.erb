@@ -1,0 +1,11 @@
+<%= form_for @students do |f| %>
+
+	<%= f.email_field :email, placeholder: "Email"  %><br/>
+    <%= f.text_field :password, autocomplete: "off", placeholder: "Password"  %><br/>
+    <%= f.text_field :password_confirmation, autocomplete: "off", placeholder: "Conform Password"  %>
+    
+ <%= f.submit  %>
+<% end %>
+
+<%= link_to 'Show', @student %> |
+<%= link_to 'Back', students_path %>

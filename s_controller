@@ -1,0 +1,86 @@
+class StudentsController < ApplicationController
+  def index
+  if(session[:current_user_id])
+  @students = Student.find(session[:current_user_id])
+  else
+  	redirect_to '/login'
+  end
+  end
+  
+  def new
+  	if(session[:current_user_id])
+  		redirect_to '/students/'+ session[:current_user_id].to_s
+  	else
+  	@students = Student.new
+  end
+  end
+  
+  def create
+  @students = Student.new(student_params)
+  respond_to do |format|
+      if @students.save
+        format.html { redirect_to @students, notice: 'Student was successfully created.' }
+        format.json { render :show, status: :created, location: @students }
+      else
+        format.html { render :new }
+        format.json { render json: @students.errors, status: :unprocessable_entity }
+      end
+  end
+  end
+  
+  def show
+  	if(session[:current_user_id])
+  @students = Student.find(session[:current_user_id])
+  else
+  	redirect_to '/login'
+  end
+  end
+
+  def edit
+  	if(session[:current_user_id])
+  @students = Student.find(session[:current_user_id])
+  else
+  	redirect_to '/login'
+  end
+  	
+  end
+
+  def update
+  	@students.update
+  	redirect_to '/students'
+  end
+
+  def destroy
+  	
+  end
+
+  def s_login
+  	mail = params[:student][:email]
+  	pass = params[:student][:password]
+  	check1 = Student.where(email: mail)
+  	check = check1.where(password: pass)
+  	if(check[0])
+  	session[:current_user_id] = check[0].id
+  	redirect_to '/students'
+  	else
+  		redirect_to '/login'
+  	end
+  end
+
+  def login_student
+  	
+  end
+
+  def reset
+  	reset_session
+  	redirect_to '/login'
+  end
+
+  private
+  def set_position
+      @students = Student.find(params[:id])
+    end
+  def student_params
+      params.require(:student).permit(:email, :password, :password_confirmation, :remember_me)
+    end
+end

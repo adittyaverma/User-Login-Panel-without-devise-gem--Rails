@@ -1,0 +1,6 @@
+<h1>Students </h1>
+<%= notice %>
+Email: <%= @students.email %><br/>
+Password: <%= @students.password %><br/>
+<%= link_to 'Logout', controller: "students", action: "show", t: 512 %>
+<%= link_to 'Update', edit_student_path(@students) %>
